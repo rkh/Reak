@@ -1,0 +1,83 @@
+#!/usr/bin/env rbx
+$LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
+require 'reak'
+require 'pp'
+
+ast, sexp, bench, syntax, evals = false, false, false, :reak, []
+
+options = Rubinius::Options.new "Usage: #$0 [options] [script]", 20
+
+options.on "-A", "Print the AST" do
+  ast = true
+end
+
+options.on "-S", "Print the S-Expression" do
+  sexp = true
+end
+
+options.on "-e", "CODE", "Execute CODE" do |e|
+  evals << e
+end
+
+options.on "-s", "SYNTAX", "What SYNTAX to use (ansi, gst, reak)" do |s|
+  syntax = s.to_sym
+end
+
+options.on "-h", "--help", "Display this help" do
+  puts options
+  exit 0
+end
+
+options.on "-B", "Benchmark parsing" do
+  bench = true
+end
+
+file = options.parse(ARGV).first
+
+display = proc do |code|
+  tree = nil
+  parser = Reak::Parser.new(syntax)
+  if bench
+    require 'benchmark'
+    Benchmark.bmbm do |x|
+      x.report { tree = parser.parse(code) }
+    end
+  else
+    tree = parser.parse(code)
+  end
+
+  if ast
+    puts "========= AST ========="
+    tree.graph
+    puts "------------------------"
+  end
+
+  if sexp
+    puts "===== S-expression ====="
+    pp tree.to_sexp
+    puts "------------------------"
+  end
+
+  begin
+    p Reak::Compiler.new.compile(code).call
+  rescue Exception => e
+    e.render
+  end
+end
+
+evals << File.read(file) if file
+
+if evals.empty?
+  if $stdin.tty?
+    loop do
+      print "st> "
+      code = gets
+      exit 0 if code == "exit\n"
+      display[code]
+    end
+  else
+    evals << STDIN.read
+  end
+end
+
+evals.each(&display)
