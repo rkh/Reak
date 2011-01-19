@@ -51,4 +51,19 @@ class Symbol
 end
 
 module Smalltalk
+  class Collection
+    attr_accessor :raw
+    def initialize(raw)
+      @raw = raw
+    end
+  end
+
+  class SequenceableCollection < Collection
+  end
+
+  class ArrayedCollection < Array
+  end
+
+  class Array < ArrayedCollection
+  end
 end
