@@ -20,6 +20,11 @@ module Reak
 
     class Self < Variable
       def initialize; end
+
+      def visit(visitor)
+        visitor.myself # like yourself, get it?
+      end
+
       def to_sexp
         [:self]
       end
@@ -40,7 +45,7 @@ module Reak
         @value = value
         @scope = scope
       end
-      
+
       def asgn_scope
         SCOPES[scope]
       end

@@ -19,6 +19,7 @@ class Object
   reak_alias ["rubyPerform:", "rubyPerform:with:", "rubyPerform:with:with:", "rubyPerform:with:with:with:"], :__send__
   reak_def("=") { |other| self == other }
   reak_def("printString") { "a RubyObject(#{inspect})" }
+  reak_def("yourself") { self }
 
   def reak_send(name, *args)
     __send__ "reak:#{name}", *args

@@ -62,6 +62,10 @@ module Reak
       g.push :nil
     end
 
+    def myself
+      g.push_self
+    end
+
     def true_kind(node)
       g.push :true
     end
