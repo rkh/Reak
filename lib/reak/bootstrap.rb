@@ -29,6 +29,16 @@ class Fixnum
   reak_alias :printString, :inspect
 end
 
+module Boolean
+  append_features FalseClass
+  append_features TrueClass
+  reak_alias :printString, :inspect
+end
+
+class NilClass
+  reak_alias :printString, :inspect
+end
+
 class Symbol
   reak_def("printString") do
     str = inspect[1..-1]
