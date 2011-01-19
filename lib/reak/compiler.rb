@@ -40,6 +40,18 @@ module Reak
       code
     end
 
+    def block(args = 0)
+      old, @generator = @generator, @generator.class.new
+      g.name          = old.state.name || :"(reak block)"
+      g.file          = old.file
+      g.for_block     = true
+      g.required_args = args
+      g.total_args    = args
+      yield if block_given?
+      blk, @generator = @generator, old
+      blk
+    end
+
     def literal(node)
       g.push_literal node.value
     end
