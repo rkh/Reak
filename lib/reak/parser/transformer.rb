@@ -103,7 +103,7 @@ module Reak
       end
 
       rule :call => { :type => :chain, :send => sequence(:messages), :on => simple(:on) } do
-        messages.reverse.inject(on) { |o,m| Reak::Syntax::Call.new(o,m) }
+        messages.inject(on) { |o,m| Reak::Syntax::Call.new(o,m) }
       end
 
       rule :keyword => simple(:key), :value => simple(:value) do
