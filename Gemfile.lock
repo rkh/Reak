@@ -1,8 +1,10 @@
-PATH
-  remote: ../parslet
+GIT
+  remote: git://github.com/kschiess/parslet.git
+  revision: 8e2a7551a0ca57e24352d500a96fab0b120d6a64
+  ref: 8e2a7551a0ca57e24352d500a96fab0b120d6a64
   specs:
-    parslet (1.1.0)
-      blankslate (~> 2.1.2.3)
+    parslet (1.0.1)
+      blankslate (~> 2.0)
 
 GEM
   remote: http://rubygems.org/
@@ -26,7 +28,6 @@ GEM
     ruby-progressbar (0.0.9)
 
 PLATFORMS
-  java
   ruby
 
 DEPENDENCIES
