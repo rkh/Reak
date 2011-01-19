@@ -10,7 +10,7 @@ Status:
 
 Example usage:
 
-    bundle exec bin/reak
+    bin/reak
     st> 1 - (2 - 1) > -1
     true
     st> (true or: [ false ]) ifTrue: [ false ifTrue: [ #false ] ifFalse: [ #true ]]

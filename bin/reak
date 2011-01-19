@@ -1,4 +1,11 @@
 #!/usr/bin/env rbx
+begin
+  require "rubygems"
+  require "bundler/setup"
+rescue LoadError => e
+  e.render
+end
+
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 require 'reak'
 require 'pp'
