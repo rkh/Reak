@@ -129,4 +129,18 @@ module Smalltalk
     reak_alias [:selector, :arguments]
     alias to_s selector
   end
+
+  class ScaledDecimal
+    attr_accessor :value, :scale
+    def initialize(value, scale)
+      @value = value
+      @scale = scale
+    end
+
+    reak_def(:printString) do
+      str = value.to_s
+      major, minor = str[0..-(scale+1)], str[-scale..-1]
+      "#{major}.#{minor}s#{scale}"
+    end
+  end
 end

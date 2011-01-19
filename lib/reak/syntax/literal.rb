@@ -156,6 +156,10 @@ module Reak
         super(major.to_i * (10 ** @scale) + minor.ljust(@scale, '0')[0,@scale].to_i)
       end
 
+      def visit(visitor)
+        visitor.scaled_decimal self
+      end
+
       def to_sexp
         [:scaled_decimal, value, scale]
       end

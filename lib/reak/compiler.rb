@@ -93,6 +93,13 @@ module Reak
       g.ret
     end
 
+    def scaled_decimal(node)
+      constant :ScaledDecimal
+      g.push_literal node.value
+      g.push_literal node.scale
+      g.send :new, 2
+    end
+
     def branch(condition, positive, negative)
       done = g.new_label
       else_label = g.new_label
