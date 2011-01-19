@@ -2,23 +2,11 @@ require 'reak/bootstrap'
 
 module Reak
   class Compiler
-    class Wrapper
-      undef send
-      def initialize(g)
-        @g = g
-      end
-
-      def method_missing(m,*a)
-        puts "g.#{m}(#{a.inspect[1..-2]})"
-        @g.__send__(m, *a)
-      end
-    end
-
     attr_reader :generator
     alias g generator
 
     def initialize
-      @generator = Generator.new #Wrapper.new Generator.new
+      @generator = Generator.new
       super
     end
 
