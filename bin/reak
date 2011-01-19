@@ -72,7 +72,7 @@ if evals.empty?
     require 'readline'
     loop do
       code = Readline.readline "st> "
-      exit 0 if code == "exit"
+      exit 0 unless code and code != "exit"
       display[code]
     end
   else
