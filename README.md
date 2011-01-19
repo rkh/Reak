@@ -15,7 +15,8 @@ Example usage:
     true
     st> (true or: [ false ]) ifTrue: [ false ifTrue: [ #false ] ifFalse: [ #true ]]
     #true
-    st> exit
+    st> 1 rubyPerform: #to_s
+    a RubyObject("1")
 
 This implementation is not image based nor does it have a built-in IDE. So, if
 you are looking for a classic Smalltalk, you might better be looking somewhere

@@ -16,6 +16,7 @@ end
 
 class Object
   reak_alias :class
+  reak_alias ["rubyPerform:", "rubyPerform:with:", "rubyPerform:with:with:", "rubyPerform:with:with:with:"], :__send__
   reak_def("=") { |other| self == other }
   reak_def("printString") { "a RubyObject(#{inspect})" }
 
