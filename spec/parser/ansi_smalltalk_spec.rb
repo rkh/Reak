@@ -126,11 +126,11 @@ describe Reak::Parser::AnsiSmalltalk do
     it { should parse('1q1') }
     it { should parse('1d1') }
     it { should parse('1.0e1') }
-    it { should parse('1q1.0') }
-    it { should parse('1.0d1.0') }
     it { should parse('-1e1') }
     it { should parse('1e-1') }
     it { should parse('-1e-1') }
+    it { should_not parse('1q1.0') }
+    it { should_not parse('1.0d1.0') }
     it { should_not parse('1') }
     it { should_not parse('1.') }
     it { should_not parse('.5') }
@@ -159,8 +159,6 @@ describe Reak::Parser::AnsiSmalltalk do
     it { should parse('1q1') }
     it { should parse('1d1') }
     it { should parse('1.0e1') }
-    it { should parse('1q1.0') }
-    it { should parse('1.0d1.0') }
     it { should parse('-1e1') }
     it { should parse('1e-1') }
     it { should parse('-1e-1') }
@@ -173,6 +171,8 @@ describe Reak::Parser::AnsiSmalltalk do
     it { should parse('5s1') }
     it { should parse('5.0s9') }
     it { should parse('-3.712s12') }
+    it { should_not parse('1q1.0') }
+    it { should_not parse('1.0d1.0') }
     it { should_not parse('5s1.0') }
     it { should_not parse('false') }
     it { should_not parse('4r') }
@@ -270,8 +270,6 @@ describe Reak::Parser::AnsiSmalltalk do
     it { should parse('1q1') }
     it { should parse('1d1') }
     it { should parse('1.0e1') }
-    it { should parse('1q1.0') }
-    it { should parse('1.0d1.0') }
     it { should parse('-1e1') }
     it { should parse('1e-1') }
     it { should parse('-1e-1') }
@@ -284,6 +282,8 @@ describe Reak::Parser::AnsiSmalltalk do
     it { should parse('5s1') }
     it { should parse('5.0s9') }
     it { should parse('-3.712s12') }
+    it { should_not parse('1.0d1.0') }
+    it { should_not parse('1q1.0') }
     it { should_not parse('5s1.0') }
     it { should_not parse('4r') }
     it { should_not parse('r5') }
