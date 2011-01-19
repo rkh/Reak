@@ -14,15 +14,45 @@ class Module
   end
 end
 
+module DoesNotUnderstand
+  def method_missing(name, *args)
+    if name.to_s =~ /\Areak:(.*)\Z/
+      reak_send "doesNotUnderstand:", Smalltalk::FailedMessage.new(name, args)
+    else
+      super
+    end
+  end
+end
+
 class Object
-  reak_alias :class
-  reak_alias ["rubyPerform:", "rubyPerform:with:", "rubyPerform:with:with:", "rubyPerform:with:with:with:"], :__send__
-  reak_def("=") { |other| self == other }
-  reak_def("printString") { "a RubyObject(#{inspect})" }
-  reak_def("yourself") { self }
+  include DoesNotUnderstand
 
   def reak_send(name, *args)
     __send__ "reak:#{name}", *args
+  end
+
+  reak_alias [:class, :hash]
+  reak_alias :isNil, :nil?
+  reak_alias "isKindOf:", :kind_of?
+  reak_alias :copy, :dup
+  reak_alias ["perform:", "perform:with:", "perform:with:with:", "perform:with:with:with:"], :reak_send
+  reak_alias ["rubyPerform:", "rubyPerform:with:", "rubyPerform:with:with:", "rubyPerform:with:with:with:"], :__send__
+  reak_alias :==, :equal?
+  reak_alias :identityHash, :object_id
+
+  reak_def("=") { |other| self == other }
+  reak_def("~=") { |other| not reak_send("=", other) }
+  reak_def("~~") { |other| not reak_send("==", other) }
+  reak_def("printString") { "a RubyObject(#{inspect})" }
+  reak_def("yourself") { self }
+  reak_def("printOn:") { fail "not yet implemented" }
+  reak_def("isMemberOf:") { |klass| self.class == klass }
+
+  reak_def("respondTo:") { |name| respond_to? "reak:#{name}" }
+  reak_def("notNil") { not reak_send("isNil") }
+
+  reak_def("doesNotUnderstand:") do |msg|
+    raise NameError, "Does not understand Smalltalk method #{msg}"
   end
 end
 
@@ -58,6 +88,10 @@ module Smalltalk
     def initialize(raw)
       @raw = raw
     end
+
+    def to_a
+      raw.to_a
+    end
   end
 
   class SequenceableCollection < Collection
@@ -74,8 +108,24 @@ module Smalltalk
   end
 
   class Array < ArrayedCollection
+    def self.from_array(ary)
+      Rubinius::Tuple[*ary]
+    end
+
     reak_def(:printString) do
       "#(#{inner_inspect})"
     end
+  end
+
+  class FailedMessage
+    attr_accessor :selector, :arguments
+
+    def initialize(selector, arguments)
+      @selector = selector
+      @arguments = Smalltalk::Array.from_array arguments
+    end
+
+    reak_alias [:selector, :arguments]
+    alias to_s selector
   end
 end
