@@ -69,6 +69,7 @@ end
 
 class NilClass
   reak_alias :printString, :inspect
+  reak_alias :isNil, :nil?
 end
 
 class Symbol

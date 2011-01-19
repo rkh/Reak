@@ -49,11 +49,11 @@ module Reak
       attr_accessor :condition, :positive, :negative
 
       def self.new(condition, positive, negative)
-        positive =  positive.unclosure if positive
-        negative = negative.unclosure if negative
+        positive = positive ? positive.unclosure : NilKind.new
+        negative = negative ? negative.unclosure : NilKind.new
         case condition
-        when TrueKind  then positive ? positive : NilKind.new
-        when FalseKind then negative ? negative : NilKind.new
+        when TrueKind  then positive
+        when FalseKind then negative
         else super(condition, positive, negative)
         end
       end
@@ -62,6 +62,10 @@ module Reak
         @condition  = condition
         @positive   = positive
         @negative   = negative
+      end
+
+      def visit(visitor)
+        visitor.branch(condition, positive, negative)
       end
 
       def to_sexp

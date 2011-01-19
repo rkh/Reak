@@ -87,5 +87,21 @@ module Reak
     def false_kind(node)
       g.push :false
     end
+
+    def branch(condition, positive, negative)
+      done = g.new_label
+      else_label = g.new_label
+
+      condition.visit self
+      g.gif else_label
+
+      positive.visit self
+      g.goto done
+
+      else_label.set!
+      negative.visit self
+
+      done.set!
+    end
   end
 end
