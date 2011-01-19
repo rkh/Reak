@@ -21,7 +21,9 @@ module Reak
       end
 
       def visit(visitor)
-        visitor.expression self
+        expressions.each do |exp|
+          exp.visit visitor
+        end
       end
     end
   end

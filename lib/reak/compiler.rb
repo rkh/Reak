@@ -88,6 +88,11 @@ module Reak
       g.push :false
     end
 
+    def return(node)
+      node.visit self
+      g.ret
+    end
+
     def branch(condition, positive, negative)
       done = g.new_label
       else_label = g.new_label

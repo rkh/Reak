@@ -12,7 +12,7 @@ module Reak
       end
 
       def visit(visitor)
-        visitor.return self
+        visitor.return expression
       end
     end
   end
