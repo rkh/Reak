@@ -10,7 +10,7 @@ Status:
 
 Example usage:
 
-    bin/reak
+    ~/Workspace/reak (git: master) ☃〠 bin/reak
     st> 1 - (2 - 1) > -1
     true
     st> 1 > 2 ifTrue: [ self halt ] ifFalse: [ nil isNil respondTo: #doesNotUnderstand: ]
