@@ -128,8 +128,13 @@ module Reak
     class Array < Literal
       alias to_a value
       alias values value
+
+      def visit(visitor)
+        visitor.array self
+      end
+
       def initialize(values)
-        super Array(values)
+        super Array(values).select { |v| Node === v }
       end
 
       def to_sexp

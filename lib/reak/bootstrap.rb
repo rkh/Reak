@@ -61,11 +61,21 @@ module Smalltalk
   end
 
   class SequenceableCollection < Collection
+    reak_def(:printString) do
+      "a #{self.class.name[/[^:]+\Z/]}(#{inner_inspect})"
+    end
+
+    def inner_inspect
+      @raw.map { |e| e.reak_send(:printString) }.join " "
+    end
   end
 
-  class ArrayedCollection < Array
+  class ArrayedCollection < SequenceableCollection
   end
 
   class Array < ArrayedCollection
+    reak_def(:printString) do
+      "#(#{inner_inspect})"
+    end
   end
 end

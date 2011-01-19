@@ -1,3 +1,5 @@
+require 'reak/bootstrap'
+
 module Reak
   class Compiler
     class Wrapper
@@ -60,6 +62,18 @@ module Reak
 
     def nil_kind(node)
       g.push :nil
+    end
+
+    def constant(name)
+      g.push_const :"Smalltalk"
+      g.find_const name
+    end
+
+    def array(node)
+      constant :Array
+      node.values.each { |v| v.visit self }
+      g.make_tuple node.values.size
+      g.send :new, 1
     end
 
     def myself
