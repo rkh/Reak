@@ -13,8 +13,8 @@ Example usage:
     bundle exec bin/reak
     st> 1 - (2 - 1) > -1
     true
-    st> (true and: false) ifTrue: [ false ifTrue: [ #false ] ifFalse: [ #true ]]
-    nil
+    st> (true or: [ false ]) ifTrue: [ false ifTrue: [ #false ] ifFalse: [ #true ]]
+    #true
     st> exit
 
 This implementation is not image based nor does it have a built-in IDE. So, if

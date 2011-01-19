@@ -16,9 +16,9 @@ module Reak
         when 'ifFalse:', 'ifFalse:ifTrue:'
           Branch.new(reciever, message.args[1], message.args[0])
         when 'and:'
-          And.new(message.args[0], message.args[1])
+          And.new(reciever, message.args[0])
         when 'or:'
-          Or.new(message.args[0], message.args[1])
+          Or.new(reciever, message.args[0])
         else
           Super === reciever ? SuperCall.new(reciever, message) : super
         end
