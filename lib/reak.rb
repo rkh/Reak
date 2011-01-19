@@ -1,4 +1,5 @@
 require 'backports'
+require 'reak/bootstrap'
 
 module Reak
   autoload :Code,       'reak/code'
