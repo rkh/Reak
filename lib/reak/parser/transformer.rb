@@ -21,6 +21,10 @@ module Reak
         Reak::Syntax::Symbol.new(value)
       end
 
+      rule :symbol => subtree(:values) do
+        Reak::Syntax::Symbol.new values.map { |v| v[:keyword] }.join
+      end
+
       rule :character => simple(:character) do
         Reak::Syntax::Character.new(character)
       end
