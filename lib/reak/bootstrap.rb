@@ -16,10 +16,27 @@ end
 
 class Object
   reak_def("=") { |other| self == other }
+  reak_def("printString") { "a RubyObject(#{inspect})" }
+
+  def reak_send(name, *args)
+    __send__ "reak:#{name}", *args
+  end
 end
 
 class Fixnum
   reak_alias [:+, :-, :<, :>]
+  reak_alias :printString, :inspect
+end
+
+class Symbol
+  reak_def("printString") do
+    str = inspect[1..-1]
+    if str[0] == ?"
+      "#'#{str[1..-2].gsub("'", "''")}'"
+    else
+      "##{str}"
+    end
+  end
 end
 
 module Smalltalk

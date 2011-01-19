@@ -59,7 +59,7 @@ display = proc do |code|
   end
 
   begin
-    p Reak::Compiler.new.compile(code).call
+    puts Reak::Compiler.new.compile(code).call.reak_send("printString")
   rescue Exception => e
     e.render
   end
