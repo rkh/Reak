@@ -13,8 +13,8 @@ Example usage:
     bin/reak
     st> 1 - (2 - 1) > -1
     true
-    st> (true or: [ false ]) ifTrue: [ false ifTrue: [ #false ] ifFalse: [ #true ]]
-    #true
+    st> 1 > 2 ifTrue: [ self halt ] ifFalse: [ nil isNil respondTo: #doesNotUnderstand: ]
+    true
     st> 1 rubyPerform: #to_s
     a RubyObject("1")
 
