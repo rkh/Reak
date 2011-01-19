@@ -1,4 +1,6 @@
-ANSI Smalltalk implementation running on Rubinius.
+Smalltalk implementation running on Rubinius.
+
+WARNING: Not usable, yet.
 
 This implementation is not image based nor does it have a built-in IDE. So, if
 you are looking for a classic Smalltalk, you might better be looking somewhere

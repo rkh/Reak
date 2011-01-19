@@ -69,10 +69,10 @@ evals << File.read(file) if file
 
 if evals.empty?
   if $stdin.tty?
+    require 'readline'
     loop do
-      print "st> "
-      code = gets
-      exit 0 if code == "exit\n"
+      code = Readline.readline "st> "
+      exit 0 if code == "exit"
       display[code]
     end
   else
