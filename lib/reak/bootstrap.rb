@@ -15,6 +15,7 @@ class Module
 end
 
 class Object
+  reak_alias :class
   reak_def("=") { |other| self == other }
   reak_def("printString") { "a RubyObject(#{inspect})" }
 
