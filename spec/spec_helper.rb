@@ -1,5 +1,6 @@
 require 'rspec'
 require 'reak'
+require 'pp'
 
 RSpec.configure do |config|
   config.expect_with :rspec
@@ -7,11 +8,23 @@ end
 
 $oot = $stderr
 
+RSpec::Matchers.define(:compile) do |input|
+  match do |compiler|
+    @compiler = compiler
+    @result = compiler.compile(input)
+  end
+
+  chain(:to) do |sexp|
+    @result.to_sexp.should == sexp
+  end
+end
+
 RSpec::Matchers.define(:parse) do |input|
   match do |parser|
     @parser = parser
     begin
       @result = parser.parse(input)
+      #pp Reak::Parser::Transformer.new.apply(@result)
       @as == @result or @as.nil?
     rescue Parslet::ParseFailed => e
       @error = e
