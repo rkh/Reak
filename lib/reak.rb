@@ -8,4 +8,8 @@ module Reak
   autoload :Parser,     'reak/parser'
   autoload :Script,     'reak/script'
   autoload :Syntax,     'reak/syntax'
+
+  def self.prefixed_method(name)
+    "reak:#{name}"
+  end
 end
