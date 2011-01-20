@@ -68,7 +68,7 @@ Object extend [
 
   notNil [
     <category: 'testing'>
-    ^ self isNil not
+    ^ true
   ]
 
   perform: aSymbol [
