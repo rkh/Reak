@@ -1,9 +1,9 @@
 GIT
-  remote: git://github.com/kschiess/parslet.git
-  revision: 8e2a7551a0ca57e24352d500a96fab0b120d6a64
-  ref: 8e2a7551a0ca57e24352d500a96fab0b120d6a64
+  remote: git://github.com/rkh/parslet.git
+  revision: 59f9303ed6bb0a10de42ae38b839b6b207dba160
+  branch: tuning-rbx
   specs:
-    parslet (1.0.1)
+    parslet (1.1.0)
       blankslate (~> 2.0)
 
 GEM
