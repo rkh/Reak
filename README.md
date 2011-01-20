@@ -8,6 +8,12 @@ Status:
 * Compiler is incomplete
 * Standard library and core classes are near to non-existent
 
+Setup:
+
+    rvm use rbx
+    gem install bundler
+    bundle install
+
 Example usage:
 
     ~/Workspace/reak (git: master) ☃〠 bin/reak
@@ -17,6 +23,8 @@ Example usage:
     true
     st> 1 rubyPerform: #to_s
     a RubyObject("1")
+    st> 1 - 1; + "yes, this is valid smalltalk" 1
+    2
 
 This implementation is not image based nor does it have a built-in IDE. So, if
 you are looking for a classic Smalltalk, you might better be looking somewhere

@@ -107,6 +107,12 @@ module Reak
         Body.new nil, messages.map { |m| Call.new(reciever, m) }
       end
 
+      def visit(visitor)
+        reciever.visit(visitor)
+        messages[0..-2].each { |msg| visitor.call_cascade(msg) }
+        messages.last.visit(visitor)
+      end
+
       def to_sexp
         [:cascade, reciever.to_sexp].concat messages.map { |m| m.to_sexp }
       end

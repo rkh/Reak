@@ -60,6 +60,12 @@ module Reak
       g.smalltalk_send(node.selector, node.arity)
     end
 
+    def call_cascade(node)
+      g.dup
+      node.visit self
+      g.pop
+    end
+
     def nil_kind(node)
       g.push :nil
     end
