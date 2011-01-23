@@ -100,7 +100,7 @@ Object extend [
 
   printOn: aStream [
     <category: 'printing'>
-    self shouldBeImplemented
+    self printString do: [ :each | aStream nextPut: each ]
   ]
 
   printString [
