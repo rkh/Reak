@@ -41,6 +41,11 @@ Object extend [
     self rubyPerform: #raise with: (aString rubyPerform: #'to_s')
   ]
 
+  halt [
+    <category:'error handling'>
+    self error: 'halt'
+  ]
+
   hash [
     <category: 'comparing'>
     ^ self rubyPerform: #hash
@@ -71,7 +76,12 @@ Object extend [
     ^ true
   ]
 
-  perform: aSymbol [
+  notYetImplemented [
+    <category: 'error handling'>
+    self error: 'not yet implemented'
+  ]
+
+  perform: aSelector [
     <category: 'message handling'>
     (aSelector respondsTo: #selector)
       ifTrue: [ ^ self perform: aSelector selector withArguments: aSelector arguments ]
@@ -113,6 +123,11 @@ Object extend [
   respondsTo: aSymbol [
     <category: 'class membership'>
     ^ self rubyPerform: #'respond_to_reak?' with: aSymbol
+  ]
+
+  subclassResponsibility [
+    <category: 'error handling'>
+    self error: 'subclass responsibility'
   ]
 
   yourself [
