@@ -73,7 +73,9 @@ Object extend [
 
   perform: aSymbol [
     <category: 'message handling'>
-    ^ self rubyPerform: #'send_reak' with: aSymbol
+    (aSelector respondsTo: #selector)
+      ifTrue: [ ^ self perform: aSelector selector withArguments: aSelector arguments ]
+      ifFalse: [ ^ self rubyPerform: #'send_smalltalk' with: aSymbol ]
   ]
 
   perform: aSymbol with: anObject [
