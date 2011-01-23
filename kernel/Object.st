@@ -56,6 +56,10 @@ Object extend [
     ^ self rubyPerform: #'object_id'
   ]
 
+  initialize [
+    <category: 'initialize'>
+  ]
+
   isKindOf: aClass [
     <category: 'class membership'>
     ^ self rubyPerform: #'kind_of?' with: aClass
@@ -90,22 +94,22 @@ Object extend [
 
   perform: aSymbol with: anObject [
     <category: 'message handling'>
-    ^ self rubyPerform: #'send_reak' with: aSymbol with: anObject
+    ^ self rubyPerform: #'send_smalltalk' with: aSymbol with: anObject
   ]
 
   perform: aSymbol with: firstObject with: secondObject [
     <category: 'message handling'>
-    ^ self rubyPerform: #'send_reak' with: aSymbol with: firstObject with: secondObject
+    ^ self rubyPerform: #'send_smalltalk' with: aSymbol with: firstObject with: secondObject
   ]
 
   perform: aSymbol with: firstObject with: secondObject with: thirdObject [
     <category: 'message handling'>
-    ^ self rubyPerform: #'send_reak' with: aSymbol with: firstObject with: secondObject with: thirdObject
+    ^ self rubyPerform: #'send_smalltalk' with: aSymbol with: firstObject with: secondObject with: thirdObject
   ]
 
   perform: aSymbol withArguments: anArray [
     <category: 'message handling'>
-    ^ self rubyPerform: #'send_reak' withArguments: { aSymbol }, anArray asArray
+    ^ self rubyPerform: #'send_smalltalk' withArguments: { aSymbol }, anArray asArray
   ]
 
   printOn: aStream [
@@ -122,7 +126,7 @@ Object extend [
 
   respondsTo: aSymbol [
     <category: 'class membership'>
-    ^ self rubyPerform: #'respond_to_reak?' with: aSymbol
+    ^ self rubyPerform: #'respond_to_smalltalk?' with: aSymbol
   ]
 
   subclassResponsibility [
