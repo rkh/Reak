@@ -1,4 +1,6 @@
 Boolean extend [
+  <category: 'Kernel'>
+
   & aBoolean [
     <category: 'logical operations'>
     self subclassResponsibility

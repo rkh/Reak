@@ -1,4 +1,6 @@
 True extend [
+  <category: 'Kernel'>
+
   & aBoolean [
     <category: 'logical operations'>
     ^ aBoolean

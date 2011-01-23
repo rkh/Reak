@@ -1,4 +1,6 @@
 Nil extend [
+  <category: 'Kernel'>
+
   printString [
     <category: 'printing'>
     ^ 'nil'
