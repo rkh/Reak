@@ -1,5 +1,4 @@
 require File.expand_path('../../test_helper', __FILE__)
-require 'reak/bootstrap/tools'
 MiniTest::Unit.autorun if $0 == __FILE__
 
 class SmalltalkExposeTest < MiniTest::Unit::TestCase
