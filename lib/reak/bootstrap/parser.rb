@@ -2,8 +2,8 @@ module Reak
   class Parser
     attr_accessor :file, :line
 
-    def initialize(file, line = 1)
-      @file, @line = file, line
+    def initialize(grammar, file, line = 1)
+      @grammar, @file, @line = grammar, file, line
     end
 
     def parse_file

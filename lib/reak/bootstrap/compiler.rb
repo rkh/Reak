@@ -8,7 +8,7 @@ module Reak
 
       def create
         # TODO: we totally ignore @transforms
-        @parser = @processor.new(@file, @line)
+        @parser = @processor.new(@compiler.grammar, @file, @line)
         @parser
       end
     end
@@ -40,6 +40,16 @@ module Reak
       def parse
         create.parse_string(@input)
       end
+    end
+
+    metaclass.send(:attr_accessor, :grammar)
+    @grammar = :reak
+
+    SYNTAX_MAP = Hash.new { |h, k| h[k] = Class.new(self) { @grammar = k }}
+    SYNTAX_MAP[:reak] = self
+
+    def self.[](syntax)
+      SYNTAX_MAP[syntax.to_sym]
     end
 
     def self.compiled_name(file)
