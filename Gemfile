@@ -1,5 +1,5 @@
 source :rubyforge
-gem 'parslet', :git => 'git://github.com/rkh/parslet.git' , :branch => 'tuning-rbx'
+gem 'parslet', '~> 1.1'
 gem 'backports'
 gem 'rspec'
 gem 'fuubar'
