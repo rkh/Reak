@@ -6,7 +6,7 @@ module Reak
         include Reak::Tools
 
         def grammar_for(syntax, g)
-          method = "#{syntax}_grammar"
+          method = smalltalk_prefix "#{syntax}Grammar:"
           respond_to?(method) ? send(method, g) : grammar(g)
         end
 
