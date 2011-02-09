@@ -1,3 +1,7 @@
+require 'rake/clean'
+
+CLEAN.include "**/*.rbc"
+
 task :bundle do
   require "bundler/setup"
 end

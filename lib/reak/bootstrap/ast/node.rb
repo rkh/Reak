@@ -5,8 +5,8 @@ module Reak
         extend  Reak::Tools
         include Reak::Tools
 
-        def grammar_for(syntax, g)
-          method = smalltalk_prefix "#{syntax}Grammar:"
+        def grammar_for(dialect, g)
+          method = smalltalk_prefix "#{dialect}Grammar:"
           respond_to?(method) ? send(method, g) : grammar(g)
         end
 
