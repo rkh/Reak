@@ -11,6 +11,7 @@ Gem::Specification.new do |s|
   s.summary     = "Smalltalk on Rubinius"
   s.description = "ANSI Smalltalk implementation for Rubinius"
 
+  s.add_dependency "convinius", "~> 0.2"
   s.add_development_dependency "minitest", "~> 2.0"
 
   s.files         = `git ls-files`.split("\n")

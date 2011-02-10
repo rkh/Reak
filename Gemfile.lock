@@ -1,10 +1,17 @@
-GEM
-  remote: http://rubygems.org/
+PATH
+  remote: .
   specs:
+    reak (0.2.0.dev)
+      convinius (~> 0.2)
+
+GEM
+  specs:
+    convinius (0.2.0)
     minitest (2.0.2)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  minitest
+  minitest (~> 2.0)
+  reak!
