@@ -6,19 +6,19 @@ module Reak
   module VERSION
     extend Comparable
 
-    MARJOR    = 0
-    MINROR    = 2
+    MAJOR     = 0
+    MINOR     = 2
     TINY      = 0
     DEV       = true
     SIGNATURE = [MAJOR, MINOR, TINY]
     STRING    = SIGNATURE.join '.'
     STRING << '.dev' if DEV
 
-    def self.major MAJOR  end
-    def self.minor MINOR  end
-    def self.tiny  TINY   end
-    def self.dev?  DEV    end
-    def self.to_s  STRING end
+    def self.major; MAJOR  end
+    def self.minor; MINOR  end
+    def self.tiny;  TINY   end
+    def self.dev?;  DEV    end
+    def self.to_s;  STRING end
 
     def self.hash
       STRING.hash
