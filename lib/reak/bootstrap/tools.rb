@@ -5,7 +5,7 @@ module Reak
 
   module Tools
     extend_object Reak
-    SMALLTALK_PREFIX = "st: "
+    SMALLTALK_PREFIX = "(st) "
 
     ##
     # Internally Smalltalk methods are mapped to Ruby methods with a prefix,
@@ -19,6 +19,17 @@ module Reak
       else
         :"#{SMALLTALK_PREFIX}#{name}"
       end
+    end
+
+    ##
+    # Checks whether a method is a smalltalk method.
+    #
+    # Example:
+    #
+    #   Reak.smalltalk_method? 'foo'                        # => false
+    #   Reak.smalltalk_method? Reak.smalltalk_prefix('foo') # => true
+    def smalltalk_method?(name)
+      name.start_with? SMALLTALK_PREFIX
     end
 
     ##
@@ -54,10 +65,12 @@ module Reak
       smalltalk  = smalltalk_prefix(smalltalk)
 
       obj.send :alias_method, smalltalk, ruby
-      cm = obj.dynamic_method ruby, file, line do |g|
+      obj.send :private, smalltalk
+
+      cm = obj.dynamic_method ruby.to_sym, file, line do |g|
         g.push_self
         0.upto(args - 1) { |i| g.push_local i }
-        g.send smalltalk, args
+        g.send smalltalk, args, true
         g.ret
       end
 
