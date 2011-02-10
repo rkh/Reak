@@ -3,6 +3,7 @@ module Reak
     class Parser < Rubinius::Compiler::Parser
       def initialize(compiler, last)
         super
+        @compiler  = compiler
         @processor = Reak::Parser
       end
 
@@ -15,7 +16,7 @@ module Reak
 
     class FileParser < Parser
       stage :reak_file
-      next_stage Generator
+      next_stage Rubinius::Compiler::Generator
 
       def input(file, line = 1)
         @file = file
@@ -29,7 +30,7 @@ module Reak
 
     class StringParser < Parser
       stage :reak_string
-      next_stage Generator
+      next_stage Rubinius::Compiler::Generator
 
       def input(string, name = "(eval)", line = 1)
         @input = string
@@ -63,6 +64,10 @@ module Reak
     def map_stage(stage)
       mapped = :"reak_#{stage}"
       Stages.include?(mapped) ? mapped : stage
+    end
+
+    def dialect
+      self.class.dialect
     end
   end
 end

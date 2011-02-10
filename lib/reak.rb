@@ -1,3 +1,5 @@
+require 'kpeg'
+
 module Reak
   require 'reak/version'
   require 'reak/bootstrap/tools'
