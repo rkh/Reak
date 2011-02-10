@@ -1,2 +1,2 @@
-source :rubygems
-gem 'minitest'
+# source :rubygems
+gemspec
