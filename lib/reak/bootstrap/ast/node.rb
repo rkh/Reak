@@ -9,7 +9,12 @@ module Reak
           method = smalltalk_prefix "#{dialect}Grammar:"
           rule   = respond_to?(method) ? send(method, g) : grammar(g)
           rule.set_action method(:action)
+          define_rule(g, rule)
+        end
+
+        def define_rule(g, rule)
           g.set rule_name, rule
+          rule_name.to_sym
         end
 
         def action(*args)
@@ -32,6 +37,9 @@ module Reak
 
         smalltalk_expose 'bootstrap_grammar', 'bootstrapGrammar:'
         smalltalk_expose 'grammar',           'grammar:'
+
+        ruby_expose 'new:',       'new'
+        ruby_expose 'new:with:',  'new'
       end
 
       def self.append_features(base)

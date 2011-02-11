@@ -61,21 +61,45 @@ module Reak
     #
     #   Smalltalk::MyFancyClass.new.foo 3 # => 5
     def smalltalk_expose(ruby, smalltalk = ruby, args = smalltalk.to_s.count(':'), obj = self)
-      file, line = caller.first.split ':'
-      smalltalk  = smalltalk_prefix(smalltalk)
-
+      smalltalk = smalltalk_prefix(smalltalk)
       obj.send :alias_method, smalltalk, ruby
       obj.send :private, smalltalk
+      soft_alias ruby, smalltalk, args, caller.first, obj
+    end
 
-      cm = obj.dynamic_method ruby.to_sym, file, line do |g|
+    ##
+    # Create late bound alias in Smalltalk for a Ruby method.
+    #
+    # This Ruby code:
+    #
+    #   ruby_expose 'foo:', 'foo'
+    #
+    # Does about the same as this Smalltalk code:
+    #
+    #   foo: someValue [ self rubyPerform: #foo with: someValue ]
+    def ruby_expose(smalltalk, ruby = smalltalk, args = smalltalk.to_s.count(':'), obj = self)
+      smalltalk = smalltalk_prefix(smalltalk)
+      cm = soft_alias smalltalk, ruby, args, caller.first, obj
+      obj.send :private, smalltalk
+      cm
+    end
+
+    private
+
+    def soft_alias(from, to, args, location, obj)
+      file, line = location.split ':'
+
+      cm = obj.dynamic_method from.to_sym, file, line do |g|
         g.push_self
         0.upto(args - 1) { |i| g.push_local i }
-        g.send smalltalk, args, true
+        g.send to.to_sym, args, true
         g.ret
       end
 
       cm.required_args = args
       cm.total_args    = args
+
+      cm
     end
   end
 end
