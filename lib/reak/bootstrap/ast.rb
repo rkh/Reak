@@ -5,8 +5,8 @@ module Reak
 
     def self.grammar_for(dialect, g = nil)
       g ||= KPeg::Grammar.new
-      Self.grammar_for(dialect, g)
-      g.root = g.self
+      Expression.grammar_for(dialect, g)
+      g.root = g.expression
       g
     end
   end
