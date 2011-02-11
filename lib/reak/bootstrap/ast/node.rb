@@ -46,20 +46,6 @@ module Reak
         base.extend ClassMethods
         super
       end
-
-      def self.to_class
-        Reak::AST::Base
-      end
-    end
-
-    def self.Node(type)
-      Class.new Rubinius::AST.const_get(type) do
-        def self.inherited(base)
-          # intentionally not calling super, just so you know
-          base.set_superclass superclass
-          base.send(:include, Reak::AST::Node)
-        end
-      end
     end
 
     class Base < Rubinius::AST::Node
