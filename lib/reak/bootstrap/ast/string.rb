@@ -5,7 +5,8 @@ module Reak
       Primary.register self
 
       def self.bootstrap_grammar(g)
-        not_quote = g.many(g.any(g.str("''"), /[^']/)) { |*a| a.join }
+        escaped   = g.str("''") { "'" }
+        not_quote = g.many(g.any(escaped, /[^']/)) { |*a| a.join }
         g.seq("'", g.t(not_quote), "'")
       end
 
