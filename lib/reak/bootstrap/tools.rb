@@ -84,6 +84,27 @@ module Reak
       cm
     end
 
+    ##
+    # Parses, compiles and executes given string as Smalltalk code.
+    #
+    # Example:
+    #   Reak.eval_smalltalk "'I''m a String!'"
+    def eval_smalltalk(code, file = '(file)', line = 1)
+      cm       = Rubinius::Compiler.compile_eval(code, binding.variables, file, line)
+      cm.scope = binding.static_scope.dup
+      cm.name  = :__smalltalk__
+      script   = Rubinius::CompiledMethod::Script.new(cm, file, true)
+      be       = Rubinius::BlockEnvironment.new
+
+      script.eval_binding = binding
+      script.eval_source  = code
+      cm.scope.script     = script
+
+      be.under_context(binding.variables, cm)
+      be.from_eval!
+      be.call
+    end
+
     private
 
     def soft_alias(from, to, args, location, obj)
