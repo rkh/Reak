@@ -9,8 +9,8 @@ module Reak
         g.seq("'", g.t(not_quote), "'")
       end
 
-      def self.action(line, value)
-        new line, value
+      def self.action(value)
+        new 1, value
       end
     end
   end
