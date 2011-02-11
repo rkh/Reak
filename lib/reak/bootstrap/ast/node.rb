@@ -55,5 +55,27 @@ module Reak
         raise NotImplementedError, 'subclass responsibility'
       end
     end
+
+    class Bucket < Base
+      def self.register(*list)
+        self.list.unshift(*list)
+      end
+
+      def self.grammar_for(dialect, g)
+        rules = list.map { |e| e.grammar_for(dialect, g) }
+        define_rule g, g.any(*rules)
+      end
+
+      def self.list
+        @list ||= []
+      end
+    end
+
+    class Expression < Bucket
+    end
+
+    class Primary < Bucket
+      Expression.register self
+    end
   end
 end
