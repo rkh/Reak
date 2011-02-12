@@ -90,7 +90,7 @@ module Reak
     # Example:
     #   Reak.eval_smalltalk "'I''m a String!'"
     def eval_smalltalk(code, file = '(file)', line = 1)
-      cm       = Rubinius::Compiler.compile_eval(code, binding.variables, file, line)
+      cm       = Reak::Compiler.compile_eval(code, binding.variables, file, line)
       cm.scope = binding.static_scope.dup
       cm.name  = :__smalltalk__
       script   = Rubinius::CompiledMethod::Script.new(cm, file, true)
