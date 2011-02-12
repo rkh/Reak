@@ -2,12 +2,13 @@ require 'rake/clean'
 
 CLEAN.include "**/*.rbc"
 
-task :bundle do
+task :env do
   require "bundler/setup"
+  $LOAD_PATH.unshift 'vendor/kpeg/lib'
 end
 
 desc "run specs"
-task :spec => :bundle do
+task :spec => :env do
   $LOAD_PATH.unshift 'test', 'lib'
   require 'minitest/unit'
   MiniTest::Unit.autorun
