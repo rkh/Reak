@@ -58,7 +58,7 @@ module Reak
 
     class Bucket < Base
       def self.register(*list)
-        self.list.unshift(*list)
+        self.list.unshift(*list).uniq!
       end
 
       def self.grammar_for(dialect, g)
