@@ -3,7 +3,7 @@ Namespace current: Reak.AST [
     Primary register: Self.
     Self include: Node.
 
-    Self class >> bootstrapGrammar: g [
+    Self class >> grammar: g [
       ^ g str: 'self'
     ]
 
