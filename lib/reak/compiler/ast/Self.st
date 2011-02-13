@@ -1,6 +1,6 @@
 Namespace current: Reak.AST [
   Rubinius.AST.Self subclass: Self [
-    Primary register: Self.
+    Primary push: Self.
     Self include: Node.
 
     Self class >> grammar: g [

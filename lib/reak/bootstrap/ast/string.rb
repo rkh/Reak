@@ -2,7 +2,7 @@ module Reak
   module AST
     class String < Rubinius::AST::StringLiteral
       include Reak::AST::Node
-      Primary.register self
+      Primary.push self
 
       def self.bootstrap_grammar(g)
         escaped   = g.str("''") { "'" }
