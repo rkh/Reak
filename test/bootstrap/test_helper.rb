@@ -22,6 +22,10 @@ module LiteralTest
         end
       end
     end
+
+    def literal(literal)
+      define_method(:literal) { literal }
+    end
   end
 
   def assert(cond, *a)
