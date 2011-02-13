@@ -44,6 +44,7 @@ module Reak
 
       def self.append_features(base)
         base.extend ClassMethods
+        base.metaclass.extend Reak::Tools
         super
       end
     end
@@ -57,8 +58,16 @@ module Reak
     end
 
     class Bucket < Base
-      def self.register(*list)
-        self.list.unshift(*list).uniq!
+      def self.unshift(*nodes)
+        list.unshift(*nodes).uniq!
+      end
+
+      def self.push(*nodes)
+        list.push(*nodes).uniq!
+      end
+
+      def self.insert_before(node, before)
+        list.insert list.index(before), node
       end
 
       def self.grammar_for(dialect, g)
@@ -69,13 +78,19 @@ module Reak
       def self.list
         @list ||= []
       end
+
+      class << self
+        smalltalk_expose 'unshift',       'unshift:'
+        smalltalk_expose 'push',          'push:'
+        smalltalk_expose 'insert_before', 'insert:before:'
+      end
     end
 
     class Expression < Bucket
     end
 
     class Primary < Bucket
-      Expression.register self
+      Expression.push self
     end
   end
 end
