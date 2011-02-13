@@ -23,6 +23,12 @@ module LiteralTest
       end
     end
 
+    def evaluates(string, &block)
+      define_method("test_evaluates_#{string}") do
+        instance_exec(Reak.eval_smalltalk(string), &block)
+      end
+    end
+
     def literal(literal)
       define_method(:literal) { literal }
     end
