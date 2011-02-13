@@ -54,7 +54,7 @@ display = proc do |file, code|
     if settings[:ast] or settings[:sexp]
       ast = Reak::Parser.new(:reak, file).parse_string(code)
       info.call(:sexp, 'S-Expressions') { pp ast.to_sexp } 
-      info.call(:ast, 'AST') { Rubinius::AST::AsciiGrapher.new(ast, Rubinius::AST::Node).print }
+      info.call(:ast, 'AST') { Rubinius::AST::AsciiGrapher.new(ast).print }
     end
 
     info.call(:bc, "Bytecode") { puts Reak::Compiler.compile_string(code, file).decode }
