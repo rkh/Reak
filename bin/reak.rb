@@ -31,6 +31,11 @@ options.on "-e", "CODE", "Execute CODE" do |e|
   evals << ['(eval)', e]
 end
 
+options.on "-v", "--version", "Show version" do
+  puts "Reak #{Reak::VERSION}"
+  exit 0
+end
+
 options.on "-h", "--help", "Display this help" do
   puts options
   exit 0
