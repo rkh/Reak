@@ -3,11 +3,12 @@ MiniTest::Unit.autorun if $0 == __FILE__
 
 class ASTStringTest < MiniTest::Unit::TestCase
   include LiteralTest
+  literal Reak::AST::String
 
-  def literal
-    Reak::AST::String
-  end
+  parses "'foo'", "' '", "''", "' foo '", "'\"'", "''''",  "''' foo '''", "'\n'"
+  parses_not "'foo", "'''", "'", "foo", "''foo''"
 
-  parses "'foo'"
-  parses_not "'foo"
+  evaluates("'foo'")      { |str| assert_equal 'foo',     str }
+  evaluates("'it''s ok'") { |str| assert_equal "it's ok", str }
+  evaluates("'\\n'")      { |str| assert_equal "\\n",     str }
 end
