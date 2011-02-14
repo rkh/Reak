@@ -3,6 +3,10 @@ module Reak
     super ruby, smalltalk, args, obj
   end
 
+  def self.ruby_expose(obj, smalltalk, ruby = smalltalk, args = smalltalk.to_s.count(':'))
+    super smalltalk, ruby, args, obj
+  end
+
   module Tools
     extend_object Reak
     SMALLTALK_PREFIX = "(st) "
