@@ -1,14 +1,16 @@
 module Reak
   def self.smalltalk_expose(obj, ruby, smalltalk = ruby, args = smalltalk.to_s.count(':'))
-    super ruby, smalltalk, args, obj
+    super ruby, smalltalk, obj, args
   end
 
   def self.ruby_expose(obj, smalltalk, ruby = smalltalk, args = smalltalk.to_s.count(':'))
-    super smalltalk, ruby, args, obj
+    super smalltalk, ruby, obj, args
   end
 
   module Tools
     extend_object Reak
+    extend_object self
+
     SMALLTALK_PREFIX = "(st) "
 
     ##
@@ -64,7 +66,7 @@ module Reak
     # In Ruby:
     #
     #   Smalltalk::MyFancyClass.new.foo 3 # => 5
-    def smalltalk_expose(ruby, smalltalk = ruby, args = smalltalk.to_s.count(':'), obj = self)
+    def smalltalk_expose(ruby, smalltalk = ruby, obj = self, args = smalltalk.to_s.count(':'))
       smalltalk = smalltalk_prefix(smalltalk)
       obj.send :alias_method, smalltalk, ruby
       obj.send :private, smalltalk
@@ -81,7 +83,7 @@ module Reak
     # Does about the same as this Smalltalk code:
     #
     #   foo: someValue [ self rubyPerform: #foo with: someValue ]
-    def ruby_expose(smalltalk, ruby = smalltalk, args = smalltalk.to_s.count(':'), obj = self)
+    def ruby_expose(smalltalk, ruby = smalltalk, obj = self, args = smalltalk.to_s.count(':'))
       smalltalk = smalltalk_prefix(smalltalk)
       cm = soft_alias smalltalk, ruby, args, caller.first, obj
       obj.send :private, smalltalk
@@ -114,6 +116,8 @@ module Reak
     def soft_alias(from, to, args, location, obj)
       file, line = location.split ':'
 
+      p [from, to, obj]
+
       cm = obj.dynamic_method from.to_sym, file, line do |g|
         g.push_self
         0.upto(args - 1) { |i| g.push_local i }
@@ -126,5 +130,7 @@ module Reak
 
       cm
     end
+
+    Reak.ruby_expose Reak.metaclass, 'on:as:expose:', 'ruby_expose'
   end
 end

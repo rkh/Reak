@@ -37,6 +37,7 @@ module Reak
 
         smalltalk_expose 'bootstrap_grammar', 'bootstrapGrammar:'
         smalltalk_expose 'grammar',           'grammar:'
+        smalltalk_expose 'grammar_for',       'grammar:for:'
 
         ruby_expose 'new:',       'new'
         ruby_expose 'new:with:',  'new'
@@ -68,6 +69,10 @@ module Reak
 
       def self.insert_before(node, before)
         list.insert list.index(before), node
+      end
+
+      def self.insert_after(node, after)
+        list.insert list.index(after) + 1, node
       end
 
       def self.grammar_for(dialect, g)

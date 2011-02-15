@@ -2,6 +2,8 @@ module Reak
   module AST
     require 'reak/bootstrap/ast/node'
     require 'reak/bootstrap/ast/string'
+    require 'reak/bootstrap/ast/constant_access'
+    require 'reak/bootstrap/ast/scoped_constant'
     require 'reak/bootstrap/ast/keyword_send'
 
     def self.grammar_for(dialect, g = nil)
