@@ -8,13 +8,17 @@ module Reak
         def grammar_for(dialect, g)
           method = smalltalk_prefix "#{dialect}Grammar:"
           rule   = respond_to?(method) ? send(method, g) : grammar(g)
-          rule.set_action method(:action)
+          set_action(rule)
           define_rule(g, rule)
         end
 
+        def set_action(rule)
+          rule.set_action method(:action)
+        end
+
         def define_rule(g, rule)
-          g.set rule_name, rule
-          rule_name.to_sym
+          g.set rule_name.to_s, rule
+          rule_name
         end
 
         def action(*args)
@@ -24,7 +28,7 @@ module Reak
         end
 
         def rule_name
-          name[/[^:]+$/].downcase
+          name[/[^:]+$/].downcase.to_sym
         end
 
         def bootstrap_grammar(g)
@@ -35,6 +39,11 @@ module Reak
           bootstrap_grammar(g)
         end
 
+        def inherited(subclass)
+          Node.nodes << subclass
+          super
+        end
+
         smalltalk_expose 'bootstrap_grammar', 'bootstrapGrammar:'
         smalltalk_expose 'grammar',           'grammar:'
         smalltalk_expose 'grammar_for',       'grammar:for:'
@@ -43,7 +52,11 @@ module Reak
         ruby_expose 'new:with:',  'new'
       end
 
+      metaclass.send(:attr_accessor, :nodes)
+      self.nodes ||= []
+
       def self.append_features(base)
+        nodes << base
         base.extend ClassMethods
         base.metaclass.extend Reak::Tools
         super
@@ -53,7 +66,11 @@ module Reak
     class Base < Rubinius::AST::Node
       include Node
 
-      def bytecode(g)
+      def self.grammar_for(*)
+        super unless self == Base
+      end
+
+      def self.bytecode(g)
         raise NotImplementedError, 'subclass responsibility'
       end
     end
@@ -76,8 +93,15 @@ module Reak
       end
 
       def self.grammar_for(dialect, g)
-        rules = list.map { |e| e.grammar_for(dialect, g) }
-        define_rule g, g.any(*rules)
+        return if self == Bucket
+        super
+      end
+
+      def self.bootstrap_grammar(g)
+        g.any(*list.map { |e| e.rule_name })
+      end
+
+      def self.set_action(*)
       end
 
       def self.list

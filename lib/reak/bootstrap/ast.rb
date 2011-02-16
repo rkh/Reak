@@ -9,8 +9,8 @@ module Reak
     def self.grammar_for(dialect, g = nil)
       g ||= KPeg::Grammar.new
       rules_for(dialect, g)
-      Expression.grammar_for(dialect, g)
       g.root = g.expression
+      Node.nodes.each { |n| n.grammar_for(dialect, g) }
       g
     end
 
