@@ -5,12 +5,13 @@ module Reak
     require 'reak/bootstrap/ast/constant_access'
     require 'reak/bootstrap/ast/scoped_constant'
     require 'reak/bootstrap/ast/keyword_send'
+    require 'reak/bootstrap/ast/block'
 
     def self.grammar_for(dialect, g = nil)
       g ||= KPeg::Grammar.new
       rules_for(dialect, g)
-      g.root = g.expression
       Node.nodes.each { |n| n.grammar_for(dialect, g) }
+      g.root = g.block
       g
     end
 
