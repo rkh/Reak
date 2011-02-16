@@ -5,7 +5,7 @@ module Reak
 
       def self.bootstrap_grammar(g)
         line = g.seq g.t(:expression), '.'
-        g.seq g.kleene(line), g.maybe(:expression)
+        g.seq g.t(g.kleene(line)), g.t(g.maybe(:expression)), g.sp
       end
 
       def self.action(*array)
