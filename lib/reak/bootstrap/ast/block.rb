@@ -9,7 +9,9 @@ module Reak
       end
 
       def self.action(*array)
-        new 1, array.flatten
+        array.flatten!
+        array << nil_literal(1) if array.empty?
+        new 1, array
       end
     end
   end

@@ -12,6 +12,15 @@ module Reak
           define_rule(g, rule)
         end
 
+        def nil_literal(line)
+          if Reak::AST.const_defined? :NilLiteral
+            literal = Reak::AST::NilLiteral
+          else
+            literal = Rubinius::AST::NilLiteral
+          end
+          literal.new(line)
+        end
+
         def set_action(rule)
           rule.set_action method(:action)
         end
@@ -50,6 +59,10 @@ module Reak
 
         ruby_expose 'new:',       'new'
         ruby_expose 'new:with:',  'new'
+      end
+
+      def nil_literal(line)
+        self.class.nil_literal(line)
       end
 
       metaclass.send(:attr_accessor, :nodes)
