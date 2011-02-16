@@ -116,6 +116,9 @@ module Reak
     end
 
     class Expression < Bucket
+      def self.bootstrap_grammar(g)
+        g.seq :sp, g.t(super), :sp
+      end
     end
 
     class Primary < Bucket
