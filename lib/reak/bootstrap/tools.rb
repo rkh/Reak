@@ -116,8 +116,6 @@ module Reak
     def soft_alias(from, to, args, location, obj)
       file, line = location.split ':'
 
-      p [from, to, obj]
-
       cm = obj.dynamic_method from.to_sym, file, line do |g|
         g.push_self
         0.upto(args - 1) { |i| g.push_local i }
