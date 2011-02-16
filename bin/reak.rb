@@ -41,7 +41,6 @@ options.on "-h", "--help", "Display this help" do
   exit 0
 end
 
-
 info = proc do |cond, name, &block|
   next unless settings[cond]
   puts '', " #{name} ".center(80, "=")
@@ -64,8 +63,9 @@ display = proc do |file, code|
   end
 end
 
-file = options.parse(ARGV).first
-evals << File.read(file) if file
+options.parse(ARGV).each do |file|
+  evals << [file, File.read(file)]
+end
 
 if evals.empty?
   if $stdin.tty?
