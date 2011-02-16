@@ -16,9 +16,11 @@ module Reak
     end
 
     def self.rules_for(dialect, g)
-      g.sp = g.kleene g.any(" ", "\n")
-      g.sig_sp = g.many g.any(" ", "\n")
-      g.identifier = /[a-zA-Z][a-zA-Z0-9_]*/
+      g.comment     = g.seq '"', g.kleene(g.any('""', /[^"]/)), '"'
+      g.one_space   = g.any(/\s+/, :comment)
+      g.sp          = g.kleene :one_space
+      g.sig_sp      = g.many :one_space
+      g.identifier  = /[a-zA-Z][a-zA-Z0-9_]*/
     end
   end
 end
