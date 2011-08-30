@@ -1,5 +1,18 @@
 module Reak
   class Compiler < Rubinius::Compiler
+
+    module Reakify
+      Rubinius::Compiler::Stage.extend self
+
+      def new(compiler, *args, &block)
+        if compiler.is_a? Reak::Compiler and name =~ /^Rubinius::Compiler::([^:]+)$/
+          const = Reak::Compiler.const_get($1)
+          return const.new(compiler, *args, &block) if const != self
+        end
+        super
+      end
+    end
+
     class Parser < Rubinius::Compiler::Parser
       def initialize(compiler, last)
         super
@@ -43,7 +56,16 @@ module Reak
       end
     end
 
-    metaclass.send(:attr_accessor, :dialect)
+    class EvalParser < StringParser
+      stage :reak_eval
+      next_stage Rubinius::Compiler::Generator
+
+      def should_cache?
+        @output.should_cache?
+      end
+    end
+
+    singleton_class.send(:attr_accessor, :dialect)
     @dialect = :reak
 
     DIALECT_MAP = Hash.new { |h, k| h[k] = Class.new(self) { @dialect = k }}
@@ -55,15 +77,6 @@ module Reak
 
     def self.compiled_name(file)
       file + (file.suffix?(".st") ? "c"  : ".compiled.stc")
-    end
-
-    def initialize(from, to)
-      super map_stage(from), map_stage(to)
-    end
-
-    def map_stage(stage)
-      mapped = :"reak_#{stage}"
-      Stages.include?(mapped) ? mapped : stage
     end
 
     def dialect
