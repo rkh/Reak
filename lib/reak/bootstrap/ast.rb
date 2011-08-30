@@ -4,6 +4,7 @@ module Reak
     require 'reak/bootstrap/ast/string'
     require 'reak/bootstrap/ast/constant_access'
     require 'reak/bootstrap/ast/scoped_constant'
+    require 'reak/bootstrap/ast/iter'
     require 'reak/bootstrap/ast/keyword_send'
     require 'reak/bootstrap/ast/block'
 
