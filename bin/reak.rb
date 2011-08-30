@@ -8,13 +8,6 @@ file = File.readlink(file) while File.symlink? file
 path = File.expand_path('../../{vendor/*/,}lib', file)
 $LOAD_PATH.unshift(*Dir[path])
 
-begin
-  require "rubygems"
-  require "bundler/setup"
-rescue LoadError => e
-  e.render
-end
-
 require 'reak'
 require 'pp'
 
