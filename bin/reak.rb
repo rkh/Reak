@@ -5,8 +5,7 @@
 
 file = __FILE__
 file = File.readlink(file) while File.symlink? file
-path = File.expand_path('../../{vendor/*/,}lib', file)
-$LOAD_PATH.unshift(*Dir[path])
+$LOAD_PATH.unshift(File.expand_path('../../lib', file))
 
 require 'reak'
 require 'pp'
