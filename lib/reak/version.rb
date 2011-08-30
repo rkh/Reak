@@ -3,6 +3,16 @@ module Reak
     VERSION
   end
 
+  def self.identifier
+    @identifier ||= begin
+      Dir.chdir(File.dirname(__FILE__)) do
+        %x[git log HEAD~1..HEAD --pretty=format:%h]
+      end
+    rescue Errno::ENOENT
+      VERSION
+    end
+  end
+
   module VERSION
     extend Comparable
 

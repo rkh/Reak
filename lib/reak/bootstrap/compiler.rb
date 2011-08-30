@@ -76,7 +76,7 @@ module Reak
     end
 
     def self.compiled_name(file)
-      file + (file.suffix?(".st") ? "c"  : ".compiled.stc")
+      super + ".#{Reak.identifier}.reak"
     end
 
     def dialect
