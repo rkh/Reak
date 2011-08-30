@@ -4,21 +4,13 @@ require 'reak'
 module LiteralTest
   module ClassMethods
     def parses(*strings)
-      strings.each do |string|
-        define_method("test_parses_#{string}") do
-          parser = KPeg::Parser.new string, grammar
-          parser.parse
-          assert(!parser.failed?) { parser.error_expectation }
-        end
-      end
+      strings.each { |str| define_method("test_parses_#{str}") { parses(str) }}
     end
 
     def parses_not(*strings)
-      strings.each do |string|
-        define_method("test_parses_#{string}") do
-          parser = KPeg::Parser.new string, grammar
-          parser.parse
-          assert parser.failed?, "expected #{literal.inspect} not to parse #{string.inspect}"
+      strings.each do |str|
+        define_method("test_parses_#{str}") do
+          assert_raises(Reak::Parser::ParseError) { parses(str) }
         end
       end
     end
@@ -34,6 +26,11 @@ module LiteralTest
     end
   end
 
+  def parses(string)
+    parser = Reak::Parser.new(:reak, "parses #{string.inspect}")
+    assert parser.parse_string(string)
+  end
+
   def assert(cond, *a)
     if a.empty? and block_given? and not cond
       super cond, yield
@@ -41,17 +38,6 @@ module LiteralTest
       super
     end
   end
-
-  def grammar
-    @grammar ||= grammar_for :reak
-  end
-
-  def grammar_for(dialect, g = nil)
-    g ||= KPeg::Grammar.new
-    Reak::AST::Expression.grammar_for(dialect, g)
-    g.root = g.send(literal.rule_name)
-    g
-  end 
 
   def self.append_features(base)
     base.extend ClassMethods
