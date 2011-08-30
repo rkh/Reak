@@ -2,7 +2,7 @@ module Reak
   class Parser
     class ParseError < RuntimeError
       def initialize(parser, match)
-        super parser.error_expectation
+        super parser.expectation
         @parser = parser
         @match = match
       end
