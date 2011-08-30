@@ -65,13 +65,13 @@ module Reak
         self.class.nil_literal(line)
       end
 
-      metaclass.send(:attr_accessor, :nodes)
+      singleton_class.send(:attr_accessor, :nodes)
       self.nodes ||= []
 
       def self.append_features(base)
         nodes << base
         base.extend ClassMethods
-        base.metaclass.extend Reak::Tools
+        base.singleton_class.extend Reak::Tools
         super
       end
     end

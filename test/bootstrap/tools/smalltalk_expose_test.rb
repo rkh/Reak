@@ -4,7 +4,7 @@ MiniTest::Unit.autorun if $0 == __FILE__
 class SmalltalkExposeTest < MiniTest::Unit::TestCase
   def setup
     @class = Class.new
-    @class.metaclass.send(:public, :define_method)
+    @class.singleton_class.send(:public, :define_method)
     @class.define_method(:foo) { 10 }
     Reak.smalltalk_expose @class, :foo
     @instance = @class.new

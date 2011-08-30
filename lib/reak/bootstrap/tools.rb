@@ -129,6 +129,6 @@ module Reak
       cm
     end
 
-    Reak.ruby_expose Reak.metaclass, 'on:as:expose:', 'ruby_expose'
+    Reak.ruby_expose Reak.singleton_class, 'on:as:expose:', 'ruby_expose'
   end
 end
