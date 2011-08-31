@@ -1,6 +1,5 @@
 module Reak
   class Compiler < Rubinius::Compiler
-
     module Reakify
       Rubinius::Compiler::Stage.extend self
 
@@ -65,6 +64,13 @@ module Reak
       end
     end
 
+    class Writer < Rubinius::Compiler::Writer
+      def initialize(compiler, last)
+        super
+        @signature = Reak::Signature
+      end
+    end
+
     singleton_class.send(:attr_accessor, :dialect)
     @dialect = :reak
 
@@ -73,10 +79,6 @@ module Reak
 
     def self.[](dialect)
       DIALECT_MAP[dialect.to_sym]
-    end
-
-    def self.compiled_name(file)
-      super + ".#{Reak.identifier}.reak"
     end
 
     def dialect
