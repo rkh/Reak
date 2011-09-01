@@ -22,11 +22,6 @@ module Reak
         Rubinius::CodeLoader.save_compiled?
       end
 
-      def run_once(file, wrap = false)
-        Rubinius.synchronize do
-        end
-      end
-
       def run(file, wrap = false)
         new(file).run(wrap)
       end
