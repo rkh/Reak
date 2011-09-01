@@ -49,7 +49,7 @@ display = proc do |file, code|
     end
 
     info.call(:bc, "Bytecode") { puts Reak::Compiler.compile_string(code, file).decode }
-    p Reak.eval_smalltalk(code, file)
+    puts "=> %p" % Reak.eval_smalltalk(code, file)
   rescue Exception => e
     e.render
   end
