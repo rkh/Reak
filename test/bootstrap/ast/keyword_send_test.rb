@@ -28,6 +28,25 @@ class ASTKeywordSendTest < MiniTest::Unit::TestCase
   parses "'foo' equals: 'bar'", "Something a: Something b: Something c: Something"
   parses_not "'foo' equals:", "Something a: Something b: c: Something"
 
+  parses <<-Smalltalk
+    Something
+      a: Something
+      b: Something
+      c: Something
+  Smalltalk
+
+  parses <<-Smalltalk
+    Something a: Something
+      b: Something c: Something
+  Smalltalk
+
+  parses <<-Smalltalk
+    Something a:
+    Something
+      b:
+    Something c: Something
+  Smalltalk
+
   evaluates("ASTKeywordSendTest.Something setValue: 'foo'") do |return_value|
     assert_equal "ok", return_value
     assert_equal "foo", Something.value
