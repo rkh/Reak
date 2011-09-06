@@ -2,16 +2,16 @@ PATH
   remote: .
   specs:
     reak (0.2.0.dev)
-      convinius (~> 0.2)
 
 GEM
   specs:
-    convinius (0.2.0)
-    minitest (2.0.2)
+    minitest (2.5.1)
+    rake (0.9.2)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  minitest (~> 2.0)
+  minitest (~> 2.5)
+  rake
   reak!
