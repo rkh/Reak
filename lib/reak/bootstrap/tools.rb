@@ -119,7 +119,8 @@ module Reak
       cm = obj.dynamic_method from.to_sym, file, line do |g|
         g.push_self
         0.upto(args - 1) { |i| g.push_local i }
-        g.send to.to_sym, args, true
+        g.push_proc
+        g.send_with_block to.to_sym, args, true
         g.ret
       end
 
