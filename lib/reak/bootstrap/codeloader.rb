@@ -56,7 +56,7 @@ module Reak
       version   = Rubinius::RUBY_LIB_VERSION
       compiled  = Reak::Compiler.compiled_name path
 
-      if compiled and File.exist? compiled and @stat.mtime > File.mtime(compiled)
+      if compiled and File.exist? compiled and @stat.mtime < File.mtime(compiled)
         begin
           cm = load_compiled_file(compiled, signature, version)
         rescue TypeError, Rubinius::InvalidRBC
@@ -83,7 +83,7 @@ module Reak
 
     def load_compiled_file(path, signature, version)
       Rubinius.primitive :compiledfile_load
-      raise InvalidRBC, path
+      raise Rubinius::InvalidRBC, path
     end
 
     def check_version?

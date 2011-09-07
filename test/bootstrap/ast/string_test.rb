@@ -6,7 +6,7 @@ class ASTStringTest < MiniTest::Unit::TestCase
   literal Reak::AST::String
 
   parses "'foo'", "' '", "''", "' foo '", "'\"'", "''''",  "''' foo '''", "'\n'"
-  parses_not "'foo", "'''", "'", "foo", "''foo''"
+  parses_not "'foo", "'''", "'", "''foo''"
 
   evaluates("'foo'")      { |str| assert_equal 'foo',     str }
   evaluates("'it''s ok'") { |str| assert_equal "it's ok", str }

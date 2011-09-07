@@ -1,6 +1,8 @@
 module Reak
   module AST
     module Node
+      include Reak::Tools
+
       module ClassMethods
         extend  Reak::Tools
         include Reak::Tools
@@ -10,15 +12,6 @@ module Reak
           rule   = respond_to?(method) ? send(method, g) : grammar(g)
           set_action(rule)
           define_rule(g, rule)
-        end
-
-        def nil_literal(line)
-          if Reak::AST.const_defined? :NilLiteral
-            literal = Reak::AST::NilLiteral
-          else
-            literal = Rubinius::AST::NilLiteral
-          end
-          literal.new(line)
         end
 
         def set_action(rule)
@@ -53,6 +46,15 @@ module Reak
           super
         end
 
+        def nil_literal(line)
+          if Reak::AST.const_defined? :NilLiteral
+            literal = Reak::AST::NilLiteral
+          else
+            literal = Rubinius::AST::NilLiteral
+          end
+          literal.new(line)
+        end
+
         smalltalk_expose 'bootstrap_grammar', 'bootstrapGrammar:'
         smalltalk_expose 'grammar',           'grammar:'
         smalltalk_expose 'grammar_for',       'grammar:for:'
@@ -61,8 +63,12 @@ module Reak
         ruby_expose 'new:with:',  'new'
       end
 
-      def nil_literal(line)
+      def nil_literal(line = 1)
         self.class.nil_literal(line)
+      end
+
+      def string(line, value = '')
+        Reak::AST::String.new(line, value)
       end
 
       singleton_class.send(:attr_accessor, :nodes)

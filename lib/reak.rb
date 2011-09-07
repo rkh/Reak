@@ -9,6 +9,7 @@ module Reak
   require 'reak/bootstrap/ast'
   require 'reak/bootstrap/compiler'
   require 'reak/bootstrap/codeloader'
+  require 'reak/bootstrap/ext'
 
   # kick off smalltalk runtime
   CodeLoader.load_paths << File.expand_path('../reak', __FILE__)
