@@ -6,6 +6,7 @@ module Reak
     require 'reak/bootstrap/ast/scoped_constant'
     require 'reak/bootstrap/ast/iter'
     require 'reak/bootstrap/ast/keyword_send'
+    require 'reak/bootstrap/ast/return'
     require 'reak/bootstrap/ast/block'
 
     def self.grammar_for(dialect, g = nil)
