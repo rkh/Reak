@@ -19,7 +19,9 @@ task :signature do
   require 'digest/sha1'
   digest = Digest::SHA1.new
 
-  Dir.glob('lib/reak/{bootstrap,compiler}/**/*.{rb,st}') do |name|
+  files = Dir.glob('lib/reak/{bootstrap,compiler}/**/*.{rb,st}')
+  files << 'lib/reak/kernel/Alpha.st'
+  files.each do |name|
     File.open name, "r" do |file|
       while chunk = file.read(1024)
         digest << chunk
