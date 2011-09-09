@@ -1,5 +1,5 @@
 Namespace current: Reak.AST [
-  Rubinius.AST.Self subclass: Self [
+  Rubinius.AST.Self subclass: 'Reak.AST.Self' [
     Primary push: Self.
     Self include: Node.
 
