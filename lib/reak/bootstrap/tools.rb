@@ -95,7 +95,16 @@ module Reak
     #
     # Example:
     #   Reak.eval_smalltalk "'I''m a String!'"
-    def eval_smalltalk(code, file = '(file)', line = 1)
+    def eval_smalltalk(code, *args)
+      file, line, binding = '(eval)', 1, TOPLEVEL_BINDING
+      args.each do |arg|
+        case arg
+        when String   then file    = arg
+        when Integer  then line    = arg
+        when Binding  then binding = arg
+        else raise ArgumentError
+        end
+      end
       cm       = Reak::Compiler.compile_eval(code, binding.variables, file, line)
       cm.scope = binding.static_scope.dup
       cm.name  = :__smalltalk__
@@ -131,5 +140,17 @@ module Reak
     end
 
     Reak.ruby_expose Reak.singleton_class, 'on:as:expose:', 'ruby_expose'
+  end
+
+  module Namespace
+    ::Namespace = self
+
+    def self.current(mod = nil, &block)
+      return Rubinius::StaticScope.of_sender.module unless mod
+      mod.class_eval(&block)
+    end
+
+    Reak.ruby_expose singleton_class, 'current:', 'current'
+    Reak.ruby_expose singleton_class, 'current',  'current'
   end
 end
