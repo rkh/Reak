@@ -143,5 +143,17 @@ module Reak
     class Primary < Bucket
       Expression.push self
     end
+
+    class Brackets < Base
+      Primary.push self
+
+      def self.bootstrap_grammar(g)
+        g.seq '(', g.t(:expression), ')'
+      end
+
+      def self.action(expression)
+        expression
+      end
+    end
   end
 end
