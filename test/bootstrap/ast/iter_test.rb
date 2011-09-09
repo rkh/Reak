@@ -22,7 +22,7 @@ class ASTIterTest < MiniTest::Unit::TestCase
 
   parses "'foo' bar: 'baz' [ 'blah' ]"
 
-  evaluates("ASTIterTest.Something setValue: 'foo' [ ^ 'ok' ]") do |return_value|
+  evaluates("ASTIterTest.Something setValue: 'foo' [ 'ok' ]") do |return_value|
      assert_equal "ok", return_value
      assert_equal "foo", Something.value
   end

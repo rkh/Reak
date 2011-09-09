@@ -8,7 +8,6 @@ module Reak
       end
 
       def self.action(body)
-        body.array << Rubinius::AST::Self.new(1)
         new 1, nil, body
       end
     end

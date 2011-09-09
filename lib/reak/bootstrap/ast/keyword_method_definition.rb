@@ -6,6 +6,7 @@ module Reak
 
       def initialize(line, receiver, name, arguments, block = nil)
         raise SyntaxError, 'expected block for method definition' unless block
+        block.body.array << Rubinius::AST::Self.new(1)
         super(line, receiver, smalltalk_prefix('defineMethod:'), [string(line, name)], block)
 
         if arguments.count > 0
