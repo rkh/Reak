@@ -55,4 +55,8 @@ class ASTKeywordSendTest < MiniTest::Unit::TestCase
   evaluates("ASTKeywordSendTest.Something to: 'foo' add: 'bar'") do |return_value|
     assert_equal "foobar", return_value
   end
+
+  evaluates("Class class class rubyPerform: 'class'") do |return_value|
+    assert_equal Class, return_value
+  end
 end
