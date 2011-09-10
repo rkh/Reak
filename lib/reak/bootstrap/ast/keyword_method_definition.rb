@@ -4,6 +4,11 @@ module Reak
       include MethodDefinition
       Expression.unshift self
 
+      def self.action(receiver, method_and_args, iter)
+        receiver = Rubinius::AST::Self.new(1) if receiver == []
+        super(receiver, method_and_args, iter)
+      end
+
       def initialize(line, receiver, name, arguments, block = nil)
         raise SyntaxError, 'expected block for method definition' unless block
         block.body.array << Rubinius::AST::Self.new(1)
