@@ -1,10 +1,11 @@
 module Reak
   class Parser
     class ParseError < RuntimeError
-      def initialize(parser, match)
-        super parser.expectation
+      def initialize(parser, match, file)
+        super "#{file}: #{parser.expectation}"
+        @file   = file
         @parser = parser
-        @match = match
+        @match  = match
       end
 
       attr_reader :parser, :match
@@ -17,14 +18,14 @@ module Reak
       @grammar = Reak::AST.grammar_for dialect
     end
 
-    def parse_file
-      parse_string File.read(@file)
+    def parse_file(log = false)
+      parse_string(File.read(@file), @file, log)
     end
 
-    def parse_string(input)
-      parser = KPeg::Parser.new(input, @grammar)
+    def parse_string(input, file = '(eval)', log = false)
+      parser = KPeg::Parser.new(input, @grammar, log)
       match  = parser.parse
-      raise ParseError.new(parser, match) if parser.failed?
+      raise ParseError.new(parser, match, file) if parser.failed?
       match.value if match
     end
   end
