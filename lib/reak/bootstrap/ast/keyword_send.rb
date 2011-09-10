@@ -2,6 +2,7 @@ module Reak
   module AST
     class KeywordSend < Rubinius::AST::SendWithArguments
       include Reak::AST::Node
+      include Reak::AST::Send
       Expression.unshift self
 
       def self.method_and_args(*pairs)
@@ -12,14 +13,6 @@ module Reak
         key_value_pair = g.seq(g.t(:identifier), ":", :sp, g.t(argument_rule(g)), :sp) { |k,v| [k, v] }
         keyword_send_args = g.many(key_value_pair) { |*p| method_and_args(*p) }
         g.seq g.t(receiver_rule(g)), :sp, g.t(keyword_send_args), g.t(g.maybe(:iter))
-      end
-
-      def self.argument_rule(g)
-        :primary
-      end
-
-      def self.receiver_rule(g)
-        :primary
       end
 
       def self.action(receiver, method_and_args, iter)

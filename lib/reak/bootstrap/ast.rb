@@ -5,6 +5,8 @@ module Reak
     require 'reak/bootstrap/ast/constant_access'
     require 'reak/bootstrap/ast/scoped_constant'
     require 'reak/bootstrap/ast/iter'
+    require 'reak/bootstrap/ast/send'
+    require 'reak/bootstrap/ast/unary_send'
     require 'reak/bootstrap/ast/keyword_send'
     require 'reak/bootstrap/ast/method_definition'
     require 'reak/bootstrap/ast/keyword_method_definition'

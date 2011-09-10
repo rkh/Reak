@@ -3,7 +3,7 @@ module Reak
     module MethodDefinition
       module ClassMethods
         def receiver_rule(g)
-          g.maybe(g.seq g.t(super), :sp, g.str('>>'))
+          g.maybe(g.seq(g.t(super), :sp, g.str('>>')))
         end
 
         def argument_rule(g)
