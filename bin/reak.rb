@@ -7,6 +7,10 @@ file = __FILE__
 file = File.readlink(file) while File.symlink? file
 $LOAD_PATH.unshift(File.expand_path('../../lib', file))
 
+Dir.chdir File.expand_path('..', file) do
+  system 'rake signature'
+end
+
 require 'reak'
 require 'pp'
 
