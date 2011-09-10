@@ -1,14 +1,12 @@
-Namespace current: Reak.AST [
-  Rubinius.AST.Self subclass: 'Reak.AST.Self' [
-    Primary push: Self.
-    Self include: Node.
+Rubinius.AST.Self subclass: 'Self' in: Reak.AST [
+  Reak.AST.Primary unshift: Reak.AST.Self.
+  Reak.AST.Self include: Reak.AST.Node.
 
-    Self class >> grammar: g [
-      ^ g str: 'self'
-    ]
+  (Reak.AST.Self class) >> grammar: g [
+    ^ g str: 'self'
+  ].
 
-    Self class >> for: line with: aString [
-      Self new: line
-    ]
-  ]
+  (Reak.AST.Self class) >> for: line with: aString [
+    ^ Rubinius.AST.Self new: line
+  ].
 ]
