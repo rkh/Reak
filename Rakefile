@@ -7,10 +7,18 @@ task :test    => :spec
 desc "run specs"
 task :spec => :signature do
   $LOAD_PATH.unshift 'test', 'lib'
+
   require 'minitest/unit'
   MiniTest::Unit.autorun
+
   Dir.glob('test/**/*_test.rb') do |file|
     load file
+  end
+
+  require 'reak'
+  Reak::CodeLoader.run('test/bootstrap/TestHelper')
+  Dir.glob('test/**/*Test.st') do |file|
+    Reak::CodeLoader.run(file)
   end
 end
 
