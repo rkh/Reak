@@ -120,6 +120,10 @@ module Reak
       be.call
     end
 
+    def smalltalk_send(object, method, *args)
+      object.send(smalltalk_prefix(method), *args)
+    end
+
     private
 
     def soft_alias(from, to, args, location, obj)
