@@ -1,6 +1,16 @@
 require 'minitest/unit'
 require 'reak'
 
+module SmalltalkTest
+  extend MiniTest::Unit::TestCase
+  attr_accessor :generated_test_counter
+  def test(desc = nil, &block)
+    @generated_test_counter || 0
+    @generated_test_counter += 1
+    define_method("test_#{@generated_test_counter}_#{desc}", &block)
+  end
+end
+
 module LiteralTest
   module ClassMethods
     def parses(*strings)
