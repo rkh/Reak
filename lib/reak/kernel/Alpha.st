@@ -21,3 +21,4 @@ Reak on: (Reak.CodeLoader class) as: 'run:' expose: 'run'.
 
 Reak run: 'compiler/KPeg'.
 Reak run: 'compiler/ast/Self'.
+Reak run: 'compiler/ast/TrueLiteral'.
