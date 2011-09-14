@@ -47,3 +47,24 @@ task :signature do
     file.puts "Reak::Signature = Rubinius::Signature ^ #{signature_hash}"
   end
 end
+
+desc 'renders the kpeg grammar'
+task :render, [:dialect] do |t,a|
+  a.with_defaults :dialect => :reak
+
+  $LOAD_PATH.unshift 'lib'
+  require 'reak'
+
+  puts <<-KPEG.gsub(/^    /, '')
+
+    ###########################################################################
+    ##                                                                       ##
+    ##     This grammar file is generated and not actually used by Reak.     ##
+    ##                                                                       ##
+    ###########################################################################
+
+  KPEG
+
+  grammar = Reak::AST.grammar_for a.dialect
+  KPeg::GrammarRenderer.new(grammar).render($stdout)
+end
